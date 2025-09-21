@@ -67,30 +67,30 @@ const App = () => {
   ];
 
   const containerVariants = {
-    hidden: { opacity: 0, height: 0, transition: { staggerChildren: 0.05, staggerDirection: -1 } },
-    show: { opacity: 1, height: 'auto', transition: { staggerChildren: 0.07 } }
+    hidden: { opacity: 0, scale: 0.9, y: 50, transition: { staggerChildren: 0.05, staggerDirection: -1 } },
+    show: { opacity: 1, scale: 1, y: 0, transition: { staggerChildren: 0.07 } }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: -20 },
+    hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0 }
   };
 
   const glassStyle = darkMode
     ? "bg-white/10 dark:bg-gray-800/10 border border-white/20 dark:border-white/10 shadow-lg backdrop-blur-md"
-    : "bg-black/10 dark:bg-white/10 border border-black/20 dark:border-black/10 shadow-lg backdrop-blur-md";
+    : "bg-black/10 dark:bg-white/10 border border-black/20 dark:border-black/10 backdrop-blur-md";
 
   const textColor = darkMode ? "text-white" : "text-black";
 
   return (
-    <div className="min-h-screen h-screen flex flex-col items-center justify-between p-4 md:p-8 transition-colors duration-500">
-      <header className="absolute top-4 right-4 flex gap-4 items-center">
+    <div className="min-h-screen flex flex-col items-center justify-between p-4 md:p-8 transition-colors duration-500 overflow-hidden">
+      <header className="fixed top-4 right-4 flex gap-4 items-center z-50">
         <motion.button
           whileHover={{ scale: 1.1, rotate: 5 }}
           whileTap={{ scale: 0.9 }}
           onClick={() => setDarkMode(!darkMode)}
           aria-label="Toggle dark mode"
-          className={`p-3 rounded-full transition-all duration-300 shadow-md ${glassStyle}`}
+          className={`p-3 rounded-full transition-all duration-300 shadow-lg ${glassStyle}`}
         >
           <FontAwesomeIcon icon={darkMode ? faSun : faMoon} className={`text-xl ${textColor}`} />
         </motion.button>
@@ -117,7 +117,7 @@ const App = () => {
               initial="hidden"
               animate="show"
               exit="hidden"
-              className="mt-6 overflow-hidden w-full"
+              className="mt-6 w-full flex-grow flex items-center justify-center"
             >
               <div className="flex flex-wrap justify-center gap-6">
                 {socialLinks.map((link, index) => (
@@ -144,7 +144,7 @@ const App = () => {
         </AnimatePresence>
       </main>
 
-      <footer className="w-full text-center">
+      <footer className="w-full text-center p-4">
         <p className="font-['Orbitron'] font-extrabold text-2xl" style={{
           animation: 'rgb-glow 4s infinite linear',
           background: 'linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3)',
