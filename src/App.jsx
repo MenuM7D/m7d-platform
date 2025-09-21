@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSun, faMoon, faGlobe } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -57,31 +58,31 @@ const App = () => {
       name: t.whatsapp,
       url: 'https://wa.me/201220864180',
       icon: faWhatsapp,
-      color: 'hover:text-green-500'
+      color: 'hover:text-green-400'
     },
     {
       name: t.whatsappChannel,
       url: 'https://whatsapp.com/channel/0029ValNLOS7IUYNlsgu9X3w',
       icon: faWhatsapp,
-      color: 'hover:text-green-500'
+      color: 'hover:text-green-400'
     },
     {
       name: t.instagram,
       url: 'https://www.instagram.com/m7d_dev/profilecard/',
       icon: faInstagram,
-      color: 'hover:text-pink-500'
+      color: 'hover:text-pink-400'
     },
     {
       name: t.facebook,
       url: 'https://www.facebook.com/share/1694rLomWR/',
       icon: faFacebook,
-      color: 'hover:text-blue-600'
+      color: 'hover:text-blue-400'
     },
     {
       name: t.youtube,
       url: 'https://youtube.com/@tanjiro-creator-bots?si=T_t9pKXiJ1htp1p9',
       icon: faYoutube,
-      color: 'hover:text-red-600'
+      color: 'hover:text-red-400'
     },
     {
       name: t.tiktok,
@@ -91,68 +92,127 @@ const App = () => {
     }
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+  };
+
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 md:p-8 transition-colors duration-300 dark:bg-gray-900 bg-gray-100 text-gray-800 dark:text-white">
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 md:p-8 transition-colors duration-500 dark:bg-gray-950 bg-gray-200"
+      style={{
+        background: 'linear-gradient(135deg, #1f2937, #4b5563, #6b7280)', // Gradient background for glass effect
+      }}>
       {/* Header with toggles */}
-      <header className="absolute top-4 right-4 flex gap-4 items-center">
+      <motion.header
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="absolute top-4 right-4 flex gap-4 items-center">
         {/* Language Switcher */}
-        <button
+        <motion.button
+          whileHover={{ scale: 1.1, rotate: 5 }}
+          whileTap={{ scale: 0.9 }}
           onClick={() => setLanguage(language === 'en' ? 'ar' : 'en')}
           aria-label="Toggle language"
-          className="p-3 rounded-full transition-transform hover:scale-110 focus:outline-none dark:bg-gray-800 bg-gray-200"
+          className="p-3 rounded-full transition-all duration-300 backdrop-blur-md bg-white/10 dark:bg-black/10 border border-white/20 dark:border-white/10 shadow-lg text-white/80"
         >
-          <FontAwesomeIcon icon={faGlobe} className="text-xl dark:text-gray-200" />
-        </button>
+          <FontAwesomeIcon icon={faGlobe} className="text-xl" />
+        </motion.button>
         {/* Dark Mode Toggle */}
-        <button
+        <motion.button
+          whileHover={{ scale: 1.1, rotate: 5 }}
+          whileTap={{ scale: 0.9 }}
           onClick={() => setDarkMode(!darkMode)}
           aria-label="Toggle dark mode"
-          className="p-3 rounded-full transition-transform hover:scale-110 focus:outline-none dark:bg-gray-800 bg-gray-200"
+          className="p-3 rounded-full transition-all duration-300 backdrop-blur-md bg-white/10 dark:bg-black/10 border border-white/20 dark:border-white/10 shadow-lg text-white/80"
         >
-          <FontAwesomeIcon icon={darkMode ? faSun : faMoon} className="text-xl dark:text-gray-200" />
-        </button>
-      </header>
+          <FontAwesomeIcon icon={darkMode ? faSun : faMoon} className="text-xl" />
+        </motion.button>
+      </motion.header>
 
-      {/* Main Profile Card */}
-      <div className="w-full max-w-lg p-8 md:p-10 rounded-3xl shadow-2xl backdrop-blur-md bg-white/70 dark:bg-gray-800/70 transition-colors duration-300 transform scale-95 md:scale-100">
-        <div className="flex flex-col items-center text-center">
+      {/* Main Profile Card - Glassmorphism style */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8 }}
+        className="w-full max-w-lg p-8 md:p-10 rounded-[3rem] shadow-2xl backdrop-blur-xl bg-white/10 dark:bg-black/10 border border-white/20 dark:border-white/10 transition-colors duration-500 transform"
+      >
+        <div className="flex flex-col items-center text-center text-white/90">
           {/* Avatar */}
-          <div className="w-28 h-28 md:w-36 md:h-36 mb-6 md:mb-8 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-white text-5xl font-bold border-4 border-white dark:border-gray-700 shadow-lg">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+            className="w-28 h-28 md:w-36 md:h-36 mb-6 md:mb-8 bg-white/20 dark:bg-black/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white text-5xl font-bold border-4 border-white/30 shadow-lg">
             M7D
-          </div>
+          </motion.div>
           {/* Name & Title */}
-          <h1 className="text-3xl md:text-4xl font-bold mb-1">{t.title}</h1>
-          <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 font-medium mb-4">{t.subtitle}</p>
+          <motion.h1
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.6 }}
+            className="text-3xl md:text-4xl font-bold mb-1"
+          >
+            {t.title}
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.6 }}
+            className="text-lg md:text-xl text-white/70 font-medium mb-4"
+          >
+            {t.subtitle}
+          </motion.p>
           {/* Bio */}
-          <p className="text-sm md:text-base text-gray-700 dark:text-gray-300 max-w-md mx-auto mb-8 leading-relaxed">
+          <motion.p
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7, duration: 0.6 }}
+            className="text-sm md:text-base text-white/80 max-w-md mx-auto mb-8 leading-relaxed"
+          >
             {t.bio}
-          </p>
+          </motion.p>
         </div>
 
         {/* Platforms Section */}
-        <div className="space-y-6">
-          <h2 className="text-xl md:text-2xl font-semibold text-center mb-6">{t.platformsTitle}</h2>
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="show"
+          className="space-y-6">
+          <h2 className="text-xl md:text-2xl font-semibold text-center mb-6 text-white">{t.platformsTitle}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {socialLinks.map((link, index) => (
-              <a
+              <motion.a
                 key={index}
+                variants={itemVariants}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`flex items-center justify-center p-4 rounded-xl font-medium transition-all duration-300 ease-in-out transform hover:scale-105 border border-gray-200 dark:border-gray-700 ${
-                  darkMode ? 'bg-gray-700 text-gray-200' : 'bg-gray-50 text-gray-700'
-                } ${link.color}`}
+                className={`flex items-center justify-center p-4 rounded-xl font-medium transition-all duration-300 backdrop-blur-sm bg-white/20 dark:bg-black/20 border border-white/20 shadow-lg text-white/90 ${link.color}`}
               >
                 <FontAwesomeIcon icon={link.icon} className="text-2xl mr-3" />
                 <span>{link.name}</span>
-              </a>
+              </motion.a>
             ))}
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* Footer */}
-      <footer className="mt-12 text-center text-gray-500 dark:text-gray-400">
+      <footer className="mt-12 text-center text-white/50">
         <p className="text-sm">{t.footer}</p>
       </footer>
     </div>
