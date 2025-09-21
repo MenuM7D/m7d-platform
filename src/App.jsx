@@ -10,6 +10,8 @@ import {
   faTiktok
 } from '@fortawesome/free-brands-svg-icons';
 import { LuShare2 } from 'react-icons/lu';
+import { FaYoutube } from "react-icons/fa6";
+
 
 const App = () => {
   const [darkMode, setDarkMode] = useState(true);
@@ -78,8 +80,10 @@ const App = () => {
     ? "bg-white/10 dark:bg-gray-800/10 border border-white/20 dark:border-white/10 shadow-lg backdrop-blur-md"
     : "bg-black/10 dark:bg-white/10 border border-black/20 dark:border-black/10 shadow-lg backdrop-blur-md";
 
+  const textColor = darkMode ? "text-white" : "text-black";
+
   return (
-    <div className="min-h-screen h-screen flex flex-col items-center justify-center p-4 md:p-8 transition-colors duration-500">
+    <div className="min-h-screen h-screen flex flex-col items-center justify-between p-4 md:p-8 transition-colors duration-500">
       <header className="absolute top-4 right-4 flex gap-4 items-center">
         <motion.button
           whileHover={{ scale: 1.1, rotate: 5 }}
@@ -88,11 +92,11 @@ const App = () => {
           aria-label="Toggle dark mode"
           className={`p-3 rounded-full transition-all duration-300 shadow-md ${glassStyle}`}
         >
-          <FontAwesomeIcon icon={darkMode ? faSun : faMoon} className="text-xl" />
+          <FontAwesomeIcon icon={darkMode ? faSun : faMoon} className={`text-xl ${textColor}`} />
         </motion.button>
       </header>
 
-      <main className="flex flex-col items-center text-center p-6 md:p-8 w-full max-w-sm sm:max-w-md">
+      <main className="flex flex-col items-center justify-center text-center w-full max-w-sm sm:max-w-md flex-grow">
         <motion.button
           onClick={() => setShowPlatforms(!showPlatforms)}
           className={`flex items-center justify-center p-4 rounded-full shadow-xl transition-all duration-300 transform hover:scale-105 ${glassStyle}`}
@@ -102,7 +106,7 @@ const App = () => {
             animate={{ rotate: showPlatforms ? 180 : 0 }}
             transition={{ duration: 0.3 }}
           >
-            <FontAwesomeIcon icon={faChevronDown} className="text-3xl" />
+            <FontAwesomeIcon icon={faChevronDown} className={`text-3xl ${textColor}`} />
           </motion.div>
         </motion.button>
 
@@ -140,7 +144,7 @@ const App = () => {
         </AnimatePresence>
       </main>
 
-      <footer className="mt-auto p-4 text-center">
+      <footer className="w-full text-center">
         <p className="font-['Orbitron'] font-extrabold text-2xl" style={{
           animation: 'rgb-glow 4s infinite linear',
           background: 'linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3)',
