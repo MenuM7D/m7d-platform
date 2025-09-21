@@ -16,7 +16,6 @@ const App = () => {
 
   const translations = {
     ar: {
-      title: 'M7D-DEV',
       platformsTitle: 'منصاتي',
       whatsapp: 'واتساب (تواصل)',
       whatsappChannel: 'قناة واتساب',
@@ -24,10 +23,8 @@ const App = () => {
       facebook: 'فيسبوك',
       youtube: 'يوتيوب',
       tiktok: 'تيك توك',
-      footer: 'تم التصميم بحب ❤️'
     },
     en: {
-      title: 'M7D-DEV',
       platformsTitle: 'My Platforms',
       whatsapp: 'WhatsApp (Contact)',
       whatsappChannel: 'WhatsApp Channel',
@@ -35,7 +32,6 @@ const App = () => {
       facebook: 'Facebook',
       youtube: 'YouTube',
       tiktok: 'TikTok',
-      footer: 'Designed with ❤️'
     }
   };
 
@@ -106,8 +102,12 @@ const App = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 md:p-8 transition-colors duration-500 dark:bg-gray-950 bg-gray-100 text-gray-800 dark:text-white">
-
+    <div
+      className="min-h-screen flex flex-col items-center justify-center p-4 md:p-8 transition-colors duration-500 text-gray-800 dark:text-white"
+      style={{
+        background: darkMode ? 'linear-gradient(135deg, #1f2937, #4b5563, #6b7280)' : 'linear-gradient(135deg, #f0f4f8, #e2e8f0, #cbd5e1)',
+      }}
+    >
       {/* Header */}
       <motion.header
         initial={{ opacity: 0, y: -20 }}
@@ -121,9 +121,9 @@ const App = () => {
           whileTap={{ scale: 0.9 }}
           onClick={() => setLanguage(language === 'en' ? 'ar' : 'en')}
           aria-label="Toggle language"
-          className="p-3 rounded-full transition-all duration-300 dark:bg-gray-800 bg-gray-200"
+          className="p-3 rounded-full transition-all duration-300 backdrop-blur-md bg-black/10 dark:bg-black/10 border border-black/20 dark:border-white/10 shadow-lg text-white dark:text-gray-200"
         >
-          <FontAwesomeIcon icon={faGlobe} className="text-xl dark:text-gray-200" />
+          <FontAwesomeIcon icon={faGlobe} className="text-xl" />
         </motion.button>
         {/* Dark Mode Toggle */}
         <motion.button
@@ -131,58 +131,48 @@ const App = () => {
           whileTap={{ scale: 0.9 }}
           onClick={() => setDarkMode(!darkMode)}
           aria-label="Toggle dark mode"
-          className="p-3 rounded-full transition-all duration-300 dark:bg-gray-800 bg-gray-200"
+          className="p-3 rounded-full transition-all duration-300 backdrop-blur-md bg-black/10 dark:bg-black/10 border border-black/20 dark:border-white/10 shadow-lg text-white dark:text-gray-200"
         >
-          <FontAwesomeIcon icon={darkMode ? faSun : faMoon} className="text-xl dark:text-gray-200" />
+          <FontAwesomeIcon icon={darkMode ? faSun : faMoon} className="text-xl" />
         </motion.button>
       </motion.header>
 
-      {/* Main Content */}
-      <main className="flex flex-col items-center text-center p-6 md:p-8 w-full max-w-lg">
-        {/* Title */}
-        <motion.h1
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.8 }}
-          className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 drop-shadow-md"
-        >
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-indigo-600">
-            {t.title}
-          </span>
-        </motion.h1>
-
-        {/* Platforms Section */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="show"
-          className="w-full space-y-4"
-        >
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-4">
-            {t.platformsTitle}
-          </h2>
-          {socialLinks.map((link, index) => (
-            <motion.a
-              key={index}
-              variants={itemVariants}
-              whileHover={{ scale: 1.03, boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)" }}
-              whileTap={{ scale: 0.98 }}
-              href={link.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`flex items-center justify-center p-4 rounded-xl font-bold text-white shadow-lg transition-all duration-300 ${link.color}`}
-            >
-              <FontAwesomeIcon icon={link.icon} className="text-2xl mr-3" />
-              <span>{link.name}</span>
-            </motion.a>
-          ))}
-        </motion.div>
-      </main>
-
-      {/* Footer */}
-      <footer className="mt-auto p-4 text-center text-gray-500 dark:text-gray-400">
-        <p className="text-sm">{t.footer}</p>
-      </footer>
+      {/* Main Profile Card - Glassmorphism style */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8 }}
+        className={`w-full max-w-lg p-6 md:p-10 rounded-[3rem] shadow-2xl backdrop-blur-xl transition-colors duration-500 transform ${darkMode ? 'bg-white/10 dark:bg-black/10 border-white/20 dark:border-white/10' : 'bg-gray-100/50 border-gray-300'}`}
+      >
+        <div className="flex flex-col items-center text-center">
+          {/* Platforms Section */}
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="show"
+            className="w-full space-y-4"
+          >
+            <h2 className={`text-2xl md:text-3xl font-bold text-center mb-4 ${darkMode ? 'text-white' : 'text-gray-800'}`}>
+              {t.platformsTitle}
+            </h2>
+            {socialLinks.map((link, index) => (
+              <motion.a
+                key={index}
+                variants={itemVariants}
+                whileHover={{ scale: 1.03, boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)" }}
+                whileTap={{ scale: 0.98 }}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`flex items-center justify-center p-4 rounded-xl font-bold text-white shadow-lg transition-all duration-300 ${link.color}`}
+              >
+                <FontAwesomeIcon icon={link.icon} className="text-2xl mr-3" />
+                <span>{link.name}</span>
+              </motion.a>
+            ))}
+          </motion.div>
+        </div>
+      </motion.div>
     </div>
   );
 };
