@@ -51,13 +51,13 @@ const App = () => {
       hover: 'hover:text-blue-400'
     },
     {
-      url: 'https://youtube.com/@tanjiro-creator-bots?si=T_t9pKXiJ1htp1p9',
+      url: 'https.youtube.com/@tanjiro-creator-bots?si=T_t9pKXiJ1htp1p9',
       icon: faYoutube,
       color: 'text-red-500',
       hover: 'hover:text-red-400'
     },
     {
-      url: 'https://vm.tiktok.com/ZS6LnomLB/',
+      url: 'https.vm.tiktok.com/ZS6LnomLB/',
       icon: faTiktok,
       color: 'text-black dark:text-gray-100',
       hover: 'hover:text-gray-900 dark:hover:text-white'
@@ -78,19 +78,15 @@ const App = () => {
     ? "bg-white/10 dark:bg-gray-800/10 border border-white/20 dark:border-white/10 shadow-lg backdrop-blur-md"
     : "bg-black/10 dark:bg-white/10 border border-black/20 dark:border-black/10 shadow-lg backdrop-blur-md";
 
-  const toggleStyle = darkMode
-    ? "bg-gray-800 text-gray-200"
-    : "bg-gray-200 text-gray-800";
-
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 md:p-8 transition-colors duration-500">
+    <div className="min-h-screen h-screen flex flex-col items-center justify-center p-4 md:p-8 transition-colors duration-500">
       <header className="absolute top-4 right-4 flex gap-4 items-center">
         <motion.button
           whileHover={{ scale: 1.1, rotate: 5 }}
           whileTap={{ scale: 0.9 }}
           onClick={() => setDarkMode(!darkMode)}
           aria-label="Toggle dark mode"
-          className={`p-3 rounded-full transition-all duration-300 shadow-md ${toggleStyle}`}
+          className={`p-3 rounded-full transition-all duration-300 shadow-md ${glassStyle}`}
         >
           <FontAwesomeIcon icon={darkMode ? faSun : faMoon} className="text-xl" />
         </motion.button>
@@ -99,7 +95,7 @@ const App = () => {
       <main className="flex flex-col items-center text-center p-6 md:p-8 w-full max-w-sm sm:max-w-md">
         <motion.button
           onClick={() => setShowPlatforms(!showPlatforms)}
-          className={`flex items-center justify-center p-4 rounded-full shadow-xl transition-all duration-300 transform hover:scale-105 ${toggleStyle}`}
+          className={`flex items-center justify-center p-4 rounded-full shadow-xl transition-all duration-300 transform hover:scale-105 ${glassStyle}`}
         >
           <motion.div
             initial={false}
@@ -145,7 +141,7 @@ const App = () => {
       </main>
 
       <footer className="mt-auto p-4 text-center">
-        <p className="font-extrabold text-2xl" style={{
+        <p className="font-['Orbitron'] font-extrabold text-2xl" style={{
           animation: 'rgb-glow 4s infinite linear',
           background: 'linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3)',
           backgroundSize: '400% 400%',
