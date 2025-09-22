@@ -145,7 +145,7 @@ const App = () => {
               transition={{ delay: 0.5, duration: 0.5 }}
               className="text-white text-2xl font-bold text-center mb-6"
             >
-              مرحباً بك
+              مرحباً بك في منصات المطور تانجيرو المعروف ب ام سفن دي
             </motion.h1>
             <motion.button
               onClick={handleStart}
@@ -156,7 +156,7 @@ const App = () => {
               transition={{ delay: 0.8, duration: 0.5 }}
               className="px-8 py-4 rounded-full bg-white/10 text-white font-semibold text-lg border border-white/20 backdrop-blur-md shadow-lg"
             >
-              اضغط للبدء
+              اضغط هنا للدخول
             </motion.button>
           </motion.div>
         )}
