@@ -12,16 +12,12 @@
   "scope": "/",
   "icons": [
     {
-      "src": "",
+      "src": "https://i.postimg.cc/Vv2fyMfd/Picsart-25-09-22-17-44-46-057.jpg",
       "sizes": "1024x1024",
       "type": "image/png"
     },
-      "src": "",
-      "sizes": "512x512",
-      "type": "image/png"
-    },
     {
-      "src": "",
+      "src": "https://i.postimg.cc/Vv2fyMfd/Picsart-25-09-22-17-44-46-057.jpg",
       "sizes": "192x192",
       "type": "image/png"
     }
