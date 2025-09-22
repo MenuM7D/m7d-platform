@@ -67,7 +67,7 @@ const App = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-between p-4 md:p-8 transition-colors duration-500 overflow-hidden relative">
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 md:p-8 transition-colors duration-500 overflow-hidden relative">
       <style jsx>{`
         @keyframes rgb-glow {
           0% {
@@ -93,16 +93,30 @@ const App = () => {
         </motion.button>
       </header>
 
-      <main className="flex flex-col items-center justify-center text-center w-full max-w-sm sm:max-w-md flex-grow">
+      <main className="flex flex-col items-center justify-center text-center w-full flex-grow">
+        <motion.p
+          className="font-extrabold text-2xl"
+          style={{
+            animation: 'rgb-glow 4s infinite linear',
+            background: 'linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3)',
+            backgroundSize: '400% 400%',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+          }}
+        >
+          PLATFORMS
+        </motion.p>
         <motion.div
           onClick={() => setShowPlatforms(!showPlatforms)}
-          className="w-full flex justify-center cursor-pointer"
+          className="w-full flex justify-center cursor-pointer mt-4"
         >
           <motion.p
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="font-extrabold text-5xl mb-8"
+            className="font-extrabold text-5xl"
             style={{
               animation: 'rgb-glow 4s infinite linear',
               background: 'linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3)',
@@ -145,7 +159,7 @@ const App = () => {
         </AnimatePresence>
       </main>
 
-      <footer className="w-full text-center p-4">
+      <footer className="w-full text-center p-4 invisible">
         <p className="font-['Orbitron'] font-extrabold text-2xl" style={{
           animation: 'rgb-glow 4s infinite linear',
           background: 'linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3)',
