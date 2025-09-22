@@ -67,7 +67,7 @@ const App = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 md:p-8 transition-colors duration-500 overflow-hidden relative">
+    <div className="min-h-screen flex flex-col items-center justify-between p-4 md:p-8 transition-colors duration-500 overflow-hidden relative">
       <style jsx>{`
         @keyframes rgb-glow {
           0% {
@@ -162,4 +162,3 @@ const App = () => {
 
 export default App;
 
-        
