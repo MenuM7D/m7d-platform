@@ -1,20 +1,20 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaWhatsapp, FaInstagram, FaFacebook, FaTiktok, FaYoutube, FaChevronDown, FaChevronUp, FaVolumeMute, FaVolumeUp } from 'react-icons/fa6';
-import { LuSun, LuMoon, LuShare2 } from 'react-icons/lu';
+import { FaWhatsapp, FaInstagram, FaFacebook, FaTiktok, FaYoutube, FaChevronDown } from 'react-icons/fa6';
+import { LuSun, LuMoon, LuShare2, LuVolume2, LuVolumeX } from 'react-icons/lu';
 
 const App = () => {
   const [darkMode, setDarkMode] = useState(true);
   const [showPlatforms, setShowPlatforms] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
-  const audioRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const audioRef = React.useRef(null);
 
   useEffect(() => {
     // Prevent scrolling completely
     document.body.style.overflow = 'hidden';
     document.documentElement.style.overflow = 'hidden';
     document.body.style.touchAction = 'none';
-    
+
     if (darkMode) {
       document.documentElement.classList.add('dark');
       document.body.style.backgroundColor = '#000000';
@@ -23,21 +23,8 @@ const App = () => {
       document.body.style.backgroundColor = '#FFFFFF';
     }
     
-    // Initialize audio
-    const audio = new Audio('https://files.catbox.moe/jbtch7.mp3');
-    audio.loop = true;
-    audio.volume = 0.3;
-    audio.play().catch(error => {
-      console.log("Audio autoplay was prevented:", error);
-    });
-    audioRef.current = audio;
-    
     // Cleanup function
     return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current = null;
-      }
       document.body.style.overflow = '';
       document.documentElement.style.overflow = '';
       document.body.style.touchAction = '';
@@ -46,41 +33,37 @@ const App = () => {
 
   useEffect(() => {
     if (audioRef.current) {
-      if (isMuted) {
-        audioRef.current.pause();
-      } else {
+      if (isPlaying) {
         audioRef.current.play().catch(error => {
-          console.log("Audio playback was prevented:", error);
+          console.error("Autoplay failed:", error);
         });
+      } else {
+        audioRef.current.pause();
       }
     }
-  }, [isMuted]);
-
-  const toggleMute = () => {
-    setIsMuted(!isMuted);
-  };
+  }, [isPlaying]);
 
   const socialLinks = [
     {
-      url: 'https://wa.me/201220864180 ',
+      url: 'https://wa.me/201220864180',
       icon: FaWhatsapp,
       color: 'text-green-500',
       hover: 'hover:text-green-400'
     },
     {
-      url: 'https://whatsapp.com/channel/0029ValNLOS7IUYNlsgu9X3w ',
+      url: 'https://whatsapp.com/channel/0029ValNLOS7IUYNlsgu9X3w',
       icon: LuShare2,
       color: 'text-green-500',
       hover: 'hover:text-green-400'
     },
     {
-      url: 'https://www.instagram.com/m7d_dev/profilecard/ ',
+      url: 'https://www.instagram.com/m7d_dev/profilecard/',
       icon: FaInstagram,
       color: 'text-pink-500',
       hover: 'hover:text-pink-400'
     },
     {
-      url: 'https://www.facebook.com/share/1694rLomWR/ ',
+      url: 'https://www.facebook.com/share/1694rLomWR/',
       icon: FaFacebook,
       color: 'text-blue-500',
       hover: 'hover:text-blue-400'
@@ -111,6 +94,8 @@ const App = () => {
 
   return (
     <div className="h-screen flex flex-col items-center justify-center p-4 md:p-8 transition-colors duration-500 overflow-hidden relative">
+      {/* Audio element for background music */}
+      <audio ref={audioRef} src="https://files.catbox.moe/jbtch7.mp3" loop autoPlay />
       <style jsx>{`
         @keyframes rgb-glow {
           0% {
@@ -139,8 +124,18 @@ const App = () => {
           overscroll-behavior: none;
         }
       `}</style>
-      
       <header className="fixed top-4 right-4 flex gap-4 items-center z-50">
+        {/* Button to toggle audio play/pause */}
+        <motion.button
+          whileHover={{ scale: 1.1, rotate: 5 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={() => setIsPlaying(!isPlaying)}
+          aria-label="Toggle audio"
+          className="p-3 rounded-full transition-all duration-300 shadow-lg bg-white/10 dark:bg-gray-800/10 border border-white/20 dark:border-white/10 backdrop-blur-md"
+        >
+          {isPlaying ? <LuVolume2 className="text-xl text-white" /> : <LuVolumeX className="text-xl text-white" />}
+        </motion.button>
+        {/* Button to toggle dark mode */}
         <motion.button
           whileHover={{ scale: 1.1, rotate: 5 }}
           whileTap={{ scale: 0.9 }}
@@ -149,20 +144,6 @@ const App = () => {
           className="p-3 rounded-full transition-all duration-300 shadow-lg bg-white/10 dark:bg-gray-800/10 border border-white/20 dark:border-white/10 backdrop-blur-md"
         >
           {darkMode ? <LuSun className="text-xl text-white" /> : <LuMoon className="text-xl text-black" />}
-        </motion.button>
-        
-        <motion.button
-          whileHover={{ scale: 1.1, rotate: 5 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={toggleMute}
-          aria-label={isMuted ? "Unmute audio" : "Mute audio"}
-          className="p-3 rounded-full transition-all duration-300 shadow-lg bg-white/10 dark:bg-gray-800/10 border border-white/20 dark:border-white/10 backdrop-blur-md"
-        >
-          {isMuted ? (
-            <FaVolumeMute className="text-xl text-white/80" />
-          ) : (
-            <FaVolumeUp className="text-xl text-white/80" />
-          )}
         </motion.button>
       </header>
 
@@ -249,3 +230,4 @@ const App = () => {
 };
 
 export default App;
+
