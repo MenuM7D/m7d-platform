@@ -1,3 +1,4 @@
+```jsx
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaWhatsapp, FaInstagram, FaFacebook, FaTiktok, FaYoutube } from 'react-icons/fa6';
@@ -19,25 +20,25 @@ const App = () => {
 
   const socialLinks = [
     {
-      url: 'https://wa.me/201220864180',
+      url: 'https://wa.me/201220864180 ',
       icon: FaWhatsapp,
       color: 'text-green-500',
       hover: 'hover:text-green-400'
     },
     {
-      url: 'https://whatsapp.com/channel/0029ValNLOS7IUYNlsgu9X3w',
+      url: 'https://whatsapp.com/channel/0029ValNLOS7IUYNlsgu9X3w ',
       icon: LuShare2,
       color: 'text-green-500',
       hover: 'hover:text-green-400'
     },
     {
-      url: 'https://www.instagram.com/m7d_dev/profilecard/',
+      url: 'https://www.instagram.com/m7d_dev/profilecard/ ',
       icon: FaInstagram,
       color: 'text-pink-500',
       hover: 'hover:text-pink-400'
     },
     {
-      url: 'https://www.facebook.com/share/1694rLomWR/',
+      url: 'https://www.facebook.com/share/1694rLomWR/ ',
       icon: FaFacebook,
       color: 'text-blue-500',
       hover: 'hover:text-blue-400'
@@ -67,7 +68,7 @@ const App = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 md:p-8 transition-colors duration-500 overflow-hidden relative">
+    <div className="h-screen flex flex-col items-center justify-center p-4 md:p-8 transition-colors duration-500 overflow-hidden relative">
       <style jsx>{`
         @keyframes rgb-glow {
           0% {
@@ -93,7 +94,7 @@ const App = () => {
         </motion.button>
       </header>
 
-      <main className="flex flex-col items-center justify-center text-center w-full flex-grow">
+      <main className="flex flex-col items-center justify-center text-center w-full max-w-md mx-auto">
         <motion.p
           className="font-extrabold text-2xl"
           style={{
@@ -175,4 +176,4 @@ const App = () => {
 };
 
 export default App;
-
+```
