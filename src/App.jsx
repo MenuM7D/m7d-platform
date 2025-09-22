@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaWhatsapp, FaInstagram, FaFacebook, FaTiktok, FaYoutube, FaChevronDown } from 'react-icons/fa6';
 import { LuSun, LuMoon, LuShare2, LuVolume2, LuVolumeX } from 'react-icons/lu';
@@ -6,8 +6,9 @@ import { LuSun, LuMoon, LuShare2, LuVolume2, LuVolumeX } from 'react-icons/lu';
 const App = () => {
   const [darkMode, setDarkMode] = useState(true);
   const [showPlatforms, setShowPlatforms] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const audioRef = React.useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isUserInteracted, setIsUserInteracted] = useState(false);
+  const audioRef = useRef(null);
 
   useEffect(() => {
     // Prevent scrolling completely
@@ -32,7 +33,7 @@ const App = () => {
   }, [darkMode]);
 
   useEffect(() => {
-    if (audioRef.current) {
+    if (audioRef.current && isUserInteracted) {
       if (isPlaying) {
         audioRef.current.play().catch(error => {
           console.error("Autoplay failed:", error);
@@ -41,7 +42,7 @@ const App = () => {
         audioRef.current.pause();
       }
     }
-  }, [isPlaying]);
+  }, [isPlaying, isUserInteracted]);
 
   const socialLinks = [
     {
@@ -92,10 +93,15 @@ const App = () => {
     show: { opacity: 1, y: 0 }
   };
 
+  const handleStart = () => {
+    setIsUserInteracted(true);
+    setIsPlaying(true);
+  };
+
   return (
     <div className="h-screen flex flex-col items-center justify-center p-4 md:p-8 transition-colors duration-500 overflow-hidden relative">
       {/* Audio element for background music */}
-      <audio ref={audioRef} src="https://files.catbox.moe/jbtch7.mp3" loop autoPlay />
+      <audio ref={audioRef} src="https://files.catbox.moe/jbtch7.mp3" loop />
       <style jsx>{`
         @keyframes rgb-glow {
           0% {
@@ -124,6 +130,38 @@ const App = () => {
           overscroll-behavior: none;
         }
       `}</style>
+
+      <AnimatePresence>
+        {!isUserInteracted && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 bg-black bg-opacity-80 flex flex-col items-center justify-center z-50 p-4"
+          >
+            <motion.h1
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.5, duration: 0.5 }}
+              className="text-white text-2xl font-bold text-center mb-6"
+            >
+              مرحباً بك
+            </motion.h1>
+            <motion.button
+              onClick={handleStart}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.8, duration: 0.5 }}
+              className="px-8 py-4 rounded-full bg-white/10 text-white font-semibold text-lg border border-white/20 backdrop-blur-md shadow-lg"
+            >
+              اضغط للبدء
+            </motion.button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <header className="fixed top-4 right-4 flex gap-4 items-center z-50">
         {/* Button to toggle audio play/pause */}
         <motion.button
