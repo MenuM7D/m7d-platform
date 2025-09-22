@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaWhatsapp, FaInstagram, FaFacebook, FaTiktok, FaYoutube } from 'react-icons/fa6';
+import { FaWhatsapp, FaInstagram, FaFacebook, FaTiktok, FaYoutube, FaChevronDown, FaChevronUp, FaVolumeMute, FaVolumeUp } from 'react-icons/fa6';
 import { LuSun, LuMoon, LuShare2 } from 'react-icons/lu';
 
 const App = () => {
   const [darkMode, setDarkMode] = useState(true);
   const [showPlatforms, setShowPlatforms] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const audioRef = useRef(null);
 
   useEffect(() => {
     // Prevent scrolling completely
@@ -21,13 +23,42 @@ const App = () => {
       document.body.style.backgroundColor = '#FFFFFF';
     }
     
+    // Initialize audio
+    const audio = new Audio('https://files.catbox.moe/jbtch7.mp3');
+    audio.loop = true;
+    audio.volume = 0.3;
+    audio.play().catch(error => {
+      console.log("Audio autoplay was prevented:", error);
+    });
+    audioRef.current = audio;
+    
     // Cleanup function
     return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
       document.body.style.overflow = '';
       document.documentElement.style.overflow = '';
       document.body.style.touchAction = '';
     };
   }, [darkMode]);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      if (isMuted) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play().catch(error => {
+          console.log("Audio playback was prevented:", error);
+        });
+      }
+    }
+  }, [isMuted]);
+
+  const toggleMute = () => {
+    setIsMuted(!isMuted);
+  };
 
   const socialLinks = [
     {
@@ -93,6 +124,8 @@ const App = () => {
           }
         }
         
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Poppins:wght@800&display=swap');
+        
         /* Prevent scrolling on all devices */
         body, html {
           overflow: hidden !important;
@@ -106,6 +139,7 @@ const App = () => {
           overscroll-behavior: none;
         }
       `}</style>
+      
       <header className="fixed top-4 right-4 flex gap-4 items-center z-50">
         <motion.button
           whileHover={{ scale: 1.1, rotate: 5 }}
@@ -116,40 +150,57 @@ const App = () => {
         >
           {darkMode ? <LuSun className="text-xl text-white" /> : <LuMoon className="text-xl text-black" />}
         </motion.button>
+        
+        <motion.button
+          whileHover={{ scale: 1.1, rotate: 5 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={toggleMute}
+          aria-label={isMuted ? "Unmute audio" : "Mute audio"}
+          className="p-3 rounded-full transition-all duration-300 shadow-lg bg-white/10 dark:bg-gray-800/10 border border-white/20 dark:border-white/10 backdrop-blur-md"
+        >
+          {isMuted ? (
+            <FaVolumeMute className="text-xl text-white/80" />
+          ) : (
+            <FaVolumeUp className="text-xl text-white/80" />
+          )}
+        </motion.button>
       </header>
 
       <main className="flex flex-col items-center justify-center text-center w-full max-w-md mx-auto">
-        <motion.p
-          className="font-extrabold text-2xl"
+        <motion.div 
+          className="font-black text-3xl md:text-4xl mb-2"
           style={{
-            animation: 'rgb-glow 4s infinite linear',
+            fontFamily: "'Montserrat', sans-serif",
+            animation: 'rgb-glow 3s infinite linear',
             background: 'linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
+            textShadow: '0 0 10px rgba(255,255,255,0.3)',
           }}
         >
-          PLATFORMS
-        </motion.p>
+          M7D PLATFORMS
+        </motion.div>
+        
         <motion.div
           onClick={() => setShowPlatforms(!showPlatforms)}
-          className="w-full flex justify-center cursor-pointer mt-4"
+          className="w-full flex justify-center cursor-pointer mt-2"
         >
-          <motion.p
+          <motion.div
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="font-extrabold text-5xl"
-            style={{
-              animation: 'rgb-glow 4s infinite linear',
-              background: 'linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-            }}
+            className="relative"
           >
-            M7D
-          </motion.p>
+            <motion.div
+              animate={{ rotate: showPlatforms ? 180 : 0 }}
+              transition={{ duration: 0.3 }}
+              className="p-3 rounded-full bg-white/10 dark:bg-gray-800/10 border border-white/20 dark:border-white/10 backdrop-blur-md shadow-lg"
+            >
+              <FaChevronDown className="text-xl text-white/80 dark:text-white/80" />
+            </motion.div>
+          </motion.div>
         </motion.div>
 
         <AnimatePresence>
@@ -183,13 +234,14 @@ const App = () => {
       </main>
 
       <footer className="w-full text-center p-4 invisible">
-        <p className="font-['Orbitron'] font-extrabold text-2xl" style={{
-          animation: 'rgb-glow 4s infinite linear',
+        <p className="font-black text-2xl" style={{
+          fontFamily: "'Montserrat', sans-serif",
+          animation: 'rgb-glow 3s infinite linear',
           background: 'linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3)',
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
         }}>
-          PLATFORMS
+          M7D PLATFORMS
         </p>
       </footer>
     </div>
