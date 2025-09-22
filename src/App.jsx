@@ -8,6 +8,11 @@ const App = () => {
   const [showPlatforms, setShowPlatforms] = useState(false);
 
   useEffect(() => {
+    // Prevent scrolling completely
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.touchAction = 'none';
+    
     if (darkMode) {
       document.documentElement.classList.add('dark');
       document.body.style.backgroundColor = '#000000';
@@ -15,6 +20,13 @@ const App = () => {
       document.documentElement.classList.remove('dark');
       document.body.style.backgroundColor = '#FFFFFF';
     }
+    
+    // Cleanup function
+    return () => {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      document.body.style.touchAction = '';
+    };
   }, [darkMode]);
 
   const socialLinks = [
@@ -80,6 +92,19 @@ const App = () => {
             background-position: 0% 50%;
           }
         }
+        
+        /* Prevent scrolling on all devices */
+        body, html {
+          overflow: hidden !important;
+          height: 100vh;
+          touch-action: none;
+          -webkit-overflow-scrolling: none;
+        }
+        
+        /* Disable scrolling with mouse wheel */
+        body {
+          overscroll-behavior: none;
+        }
       `}</style>
       <header className="fixed top-4 right-4 flex gap-4 items-center z-50">
         <motion.button
@@ -99,7 +124,6 @@ const App = () => {
           style={{
             animation: 'rgb-glow 4s infinite linear',
             background: 'linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3)',
-            backgroundSize: '400% 400%',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
           }}
@@ -120,7 +144,6 @@ const App = () => {
             style={{
               animation: 'rgb-glow 4s infinite linear',
               background: 'linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3)',
-              backgroundSize: '400% 400%',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
             }}
@@ -163,7 +186,6 @@ const App = () => {
         <p className="font-['Orbitron'] font-extrabold text-2xl" style={{
           animation: 'rgb-glow 4s infinite linear',
           background: 'linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3)',
-          backgroundSize: '400% 400%',
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
         }}>
